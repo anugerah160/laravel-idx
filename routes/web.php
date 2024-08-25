@@ -1,7 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Models\Post;
+use App\Models\User;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('home', ['title' => 'Home Page']);
@@ -10,42 +12,12 @@ Route::get('/home', function () {
     return view('home', ['title' => 'Home Page']);
 });
 Route::get('/about', function () {
-    return view('about', ['name' => 'Anugerah Putra Mahanda', 'title' => 'About page', 'posts' => [
-     [
-        'id' => 1,
-        'title' => 'Web Developer',
-        'author' => 'Anugerah Putra Mahanda',
-        'content' => 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dignissimos earum sed illo dolores atque, corrupti nulla porro saepe beatae. Animi laboriosam, recusandae error nesciunt adipisci sapiente. Quo deserunt eveniet praesentium!'
-     ],
-     [
-        'id' => 2,
-        'title' => 'Software Developer',
-        'author' => 'Anugerah Putra Mahanda',
-        'content' => 'Dignissimos earum sed illo dolores atque, corrupti nulla porro saepe beatae. Animi laboriosam, recusandae error nesciunt adipisci sapiente. Quo deserunt eveniet praesentium. Lorem ipsum, dolor sit amet consectetur adipisicing elit!'
-     ]   
-    ]]);
+    return view('about', ['name' => 'Anugerah Putra Mahanda', 'title' => 'About page', 'posts' => Post::all()]);
 });
 
 Route::get('/about/{id}', function ($id) {
     // dd($id);
-    $posts = [
-        [
-           'id' => 1,
-           'title' => 'Web Developer',
-           'author' => 'Anugerah Putra Mahanda',
-           'content' => 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dignissimos earum sed illo dolores atque, corrupti nulla porro saepe beatae. Animi laboriosam, recusandae error nesciunt adipisci sapiente. Quo deserunt eveniet praesentium!'
-        ],
-        [
-           'id' => 2,
-           'title' => 'Software Developer',
-           'author' => 'Anugerah Putra Mahanda',
-           'content' => 'Dignissimos earum sed illo dolores atque, corrupti nulla porro saepe beatae. Animi laboriosam, recusandae error nesciunt adipisci sapiente. Quo deserunt eveniet praesentium. Lorem ipsum, dolor sit amet consectetur adipisicing elit!'
-        ]   
-    ];
-
-    $post = Arr::first($posts, function($post) use ($id) {
-        return $post['id'] == $id;
-    });
+    $post = Post::find($id);
     return view('post', ['title' => 'Post Page', 'post' => $post]);
 });
 
@@ -57,4 +29,11 @@ Route::get('/skill', function () {
 });
 Route::get('/experience', function () {
     return view('experience', ['title' => 'Experience Page']);
+});
+
+Route::get('/users', function () {
+    foreach(User::all() as $user)
+    {
+        dump($user->name);
+    }
 });
