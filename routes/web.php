@@ -12,12 +12,11 @@ Route::get('/home', function () {
     return view('home', ['title' => 'Home Page']);
 });
 Route::get('/about', function () {
-    return view('about', ['name' => 'Anugerah Putra Mahanda', 'title' => 'About page', 'posts' => Post::all()]);
+    return view('about', ['title' => 'About page', 'posts' => Post::all()]);
 });
 
-Route::get('/about/{id}', function ($id) {
-    // dd($id);
-    $post = Post::find($id);
+Route::get('/about/{post:slug}', function (Post $post) {
+    // $post = Post::find($id);
     return view('post', ['title' => 'Post Page', 'post' => $post]);
 });
 
