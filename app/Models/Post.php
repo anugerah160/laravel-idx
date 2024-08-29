@@ -20,4 +20,9 @@ class Post extends Model
         //relasi ke user author_id->nama
         return $this->belongsTo(User::class);
     }
+    public function category():BelongsTo
+    {
+        //relasi ke user Category_id->nama
+        return $this->belongsTo(Category::class);
+    }
 }
