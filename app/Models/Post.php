@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Post extends Model
@@ -14,4 +15,9 @@ class Post extends Model
     // protected $primaryKey = 'post_id';
     protected $fillable = ['title', 'author', 'slug', 'content'];
 
+    public function author():BelongsTo
+    {
+        //relasi ke user author_id->nama
+        return $this->belongsTo(User::class);
+    }
 }

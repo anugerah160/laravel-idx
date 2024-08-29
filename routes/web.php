@@ -20,6 +20,10 @@ Route::get('/about/{post:slug}', function (Post $post) {
     return view('post', ['title' => 'Post Page', 'post' => $post]);
 });
 
+Route::get('/authors/{user:username}', function (User $user) {
+    return view('about', ['title' => 'Posts by ' . $user->name, 'posts' => $user->posts]);
+});
+
 Route::get('/contact', function () {
     return view('contact', ['title' => 'Contact Page']);
 });
