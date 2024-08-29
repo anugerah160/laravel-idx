@@ -32,13 +32,17 @@ class DatabaseSeeder extends Seeder
             'slug' => 'web-developer',
         ]);
         $asli2 = Category::create([
-            'name' => 'Networking',
-            'slug' => 'Networking',
+            'name' => 'Computer & Networking',
+            'slug' => 'computer-net',
+        ]);
+        $asli3 = Category::create([
+            'name' => 'Cloud Computing',
+            'slug' => 'cloud-computing',
         ]);
 
         Post::factory(100)->recycle([
-            $asli, $asli2,
-            Category::factory(1)->create(),
+            $asli, $asli2, $asli3,
+            // Category::factory(1)->create(),
             $anu,
             User::factory(4)->create()
         ])->create();
