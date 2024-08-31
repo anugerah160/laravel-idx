@@ -13,7 +13,9 @@ Route::get('/home', function () {
     return view('home', ['title' => 'Home Page']);
 });
 Route::get('/about', function () {
-    return view('about', ['title' => 'About page', 'posts' => Post::all()]);
+    // return view('about', ['title' => 'About page', 'posts' => Post::all()]);
+    $posts = Post::with(['author', 'category'])->latest()->get();
+    return view('about', ['title' => 'About page', 'posts' => $posts]);
 });
 
 Route::get('/about/{post:slug}', function (Post $post) {
@@ -22,11 +24,13 @@ Route::get('/about/{post:slug}', function (Post $post) {
 });
 
 Route::get('/authors/{user:username}', function (User $user) {
-    return view('about', ['title' => count($user->posts) . ' Posts by ' . $user->name, 'posts' => $user->posts]);
+    $posts = $user->posts->load('category', 'author');
+    return view('about', ['title' => count($posts) . ' Posts by ' . $user->name, 'posts' => $posts]);
 });
 
 Route::get('/categories/{category:name}', function (Category $category) {
-    return view('about', ['title' => 'In Category : ' . $category->name, 'posts' => $category->posts]);
+    $posts = $category->posts->load('category', 'author');
+    return view('about', ['title' => count($posts) . ' found with category : ' . $category->name, 'posts' => $posts]);
 });
 
 Route::get('/contact', function () {
